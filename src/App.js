@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import Layout from "./Components/Layout/Layout";
 
 class App extends Component {
   render() {
     return (
-        <div>
-
-        </div>
+      <div>
+        <Layout>
+          <p>
+            'Splosion Man!
+          </p>
+        </Layout>
+      </div>
     );
   }
 }
