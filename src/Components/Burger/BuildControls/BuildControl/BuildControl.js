@@ -11,12 +11,12 @@ const buildControl = (props) => (
           disabled={props.disabled}
           className={classes.Less}
           onClick={props.removed}>
-        Less
+        Remove
       </button>
       <button
           className={classes.More}
           onClick={props.added}>
-        More
+        Add
       </button>
     </div>
 );
