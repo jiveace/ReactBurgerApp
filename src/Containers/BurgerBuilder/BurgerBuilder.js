@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import Aux from '../../hoc/Auxhilliary'
 import Burger from "../../Components/Burger/Burger";
 import BuildControls from "../../Components/Burger/BuildControls/BuildControls";
+import Modal from '../../Components/UI/Modal/Modal';
+import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary'
 
 const INGREDIENT_PRICES = {
   salad: 0.25,
@@ -48,7 +50,7 @@ class BurgerBuilder extends Component {
 
   removeIngredientHandler = type => {
     const oldCount = this.state.ingredients[type];
-    if (oldCount <=0) {
+    if (oldCount <= 0) {
       return;
     }
     const updatedCount = oldCount - 1;
@@ -74,6 +76,9 @@ class BurgerBuilder extends Component {
     return (
         <Aux>
           <Burger ingredients={this.state.ingredients}/>
+          <Modal>
+            <OrderSummary ingredients={this.state.ingredients}/>
+          </Modal>
           <BuildControls
               price={this.state.totalPrice}
               ingredientAdded={this.addIngredientHandler}
