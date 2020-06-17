@@ -3,12 +3,13 @@ import React from 'react';
 import Aux from '../../hoc/Auxhilliary'
 import classes from './Layout.module.css'
 import Toolbar from '../Navigation/Toolbar/Toolbar'
+import SideDrawer from '../Navigation/SideDrawer/SideDrawer'
 
 const layout = (props) => (
     <Aux>
       <div>
         <Toolbar/>
-        {/*SideDrawer*/}
+        <SideDrawer/>
         {/*Backdrop*/}
       </div>
 
