@@ -85,26 +85,36 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    // console.log('Continue you saucy beast')
-    this.setState({loading: true});
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.price,
-      customer: {
-        name: 'Iain A Maxwell',
-        address: {
-          street: 'Caiystane Gardens',
-          zipCode: 'EH10 6TB',
-          country: 'Scotland'
-        },
-        email: 'straightedgescotsman@gmail.com',
-      },
-      deliveryMethod: 'fastest'
+    const queryParams = [];
+    for (let i in this.state.ingredients) {
+      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
     }
+    const queryString = queryParams.join('&');
 
-    axios.post('/orders.json', order)
-        .then(response => this.setState({loading: false, purchasing: false}))
-        .catch(error => this.setState({loading: false, purchasing: false}));
+    this.props.history.push({
+      pathname: '/checkout',
+      search: '?' + queryString
+    });
+    // // console.log('Continue you saucy beast')
+    // this.setState({loading: true});
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.price,
+    //   customer: {
+    //     name: 'Iain A Maxwell',
+    //     address: {
+    //       street: 'Caiystane Gardens',
+    //       zipCode: 'EH10 6TB',
+    //       country: 'Scotland'
+    //     },
+    //     email: 'straightedgescotsman@gmail.com',
+    //   },
+    //   deliveryMethod: 'fastest'
+    // }
+    //
+    // axios.post('/orders.json', order)
+    //     .then(response => this.setState({loading: false, purchasing: false}))
+    //     .catch(error => this.setState({loading: false, purchasing: false}));
   }
 
   render() {
@@ -115,10 +125,10 @@ class BurgerBuilder extends Component {
     Object.keys(disabledInfo)
         .map(key => (disabledInfo[key] = disabledInfo[key] <= 0))
 
-    let burger = this.state.error ? <p>Ingredients cannot be loaded</p> : <Spinner />;
+    let burger = this.state.error ? <p>Ingredients cannot be loaded</p> : <Spinner/>;
     let orderSummary = null;
 
-    if(this.state.ingredients) {
+    if (this.state.ingredients) {
       burger = <Aux>
         <Burger ingredients={this.state.ingredients}/>
         <BuildControls
@@ -136,7 +146,8 @@ class BurgerBuilder extends Component {
           ingredients={this.state.ingredients}
           purchaseCancelled={this.purchaseCancelHandler}
           purchaseContinued={this.purchaseContinueHandler}
-      />    }
+      />
+    }
 
     if (this.state.loading) {
       orderSummary = <Spinner/>
@@ -153,4 +164,5 @@ class BurgerBuilder extends Component {
   }
 }
 
-export default withErrorHandler(BurgerBuilder, axios)
+// export default withErrorHandler(BurgerBuilder, axios)
+export default BurgerBuilder
