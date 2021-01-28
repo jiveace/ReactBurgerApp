@@ -13,7 +13,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeHolder: 'Jim'
+          placeholder: 'Jim'
         },
         value: ''
       },
@@ -21,7 +21,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeHolder: 'Street'
+          placeholder: 'Street'
         },
         value: ''
       },
@@ -29,7 +29,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeHolder: 'EH10'
+          placeholder: 'EH10'
         },
         value: ''
       },
@@ -37,7 +37,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeHolder: 'Country'
+          placeholder: 'Country'
         },
         value: ''
       },
@@ -45,7 +45,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'email',
-          placeHolder: 'name@address.com'
+          placeholder: 'name@address.com'
         },
         value: ''
       },
@@ -66,18 +66,14 @@ class ContactData extends Component {
   orderHandler = (event) => {
     event.preventDefault();
     this.setState({loading: true});
+    const formData = {}
+    for (let formElementIdentifier in this.state.orderForm) {
+      formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+    }
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
-      customer: {
-        name: 'Iain A Maxwell',
-        address: {
-          street: 'Caiystane Gardens',
-          zipCode: 'EH10 6TB',
-          country: 'Scotland'
-        },
-        email: 'straightedgescotsman@gmail.com',
-      },
+      orderData: formData,
       deliveryMethod: 'fastest'
     }
 
@@ -90,6 +86,18 @@ class ContactData extends Component {
         .catch(error => this.setState({loading: false}));
   }
 
+  inputChangedHandler = (event, inputIdentifier) => {
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+    updatedFormElement.value = event.target.value;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    this.setState({orderForm: updatedOrderForm});
+  }
+
   render() {
     const formElementsArray = [];
     for (let key in this.state.orderForm) {
@@ -99,13 +107,14 @@ class ContactData extends Component {
       });
     }
 
-    let form = (<form>
+    let form = (<form onSubmit={this.orderHandler}>
       {formElementsArray.map(formElement => (
           <Input
               key={formElement.id}
               elementType={formElement.config.elementType}
               elementConfig={formElement.config.elementConfig}
               value={formElement.config.value}
+              changed={(event) => this.inputChangedHandler(event, formElement.id)}
           />
 
       ))}
