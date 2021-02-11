@@ -6,6 +6,7 @@ import Burger from "../../Components/Burger/Burger";
 import BuildControls from "../../Components/Burger/BuildControls/BuildControls";
 import Modal from '../../Components/UI/Modal/Modal';
 import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary'
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
 import Spinner from '../../Components/UI/Spinner/Spinner'
 import * as actionTypes from '../../store/actions';
@@ -49,17 +50,7 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    const queryParams = [];
-    for (let i in this.props.ings) {
-      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ings[i]));
-    }
-    queryParams.push(encodeURIComponent('price') + '=' + encodeURIComponent(this.state.totalPrice));
-    const queryString = queryParams.join('&');
-
-    this.props.history.push({
-      pathname: '/checkout',
-      search: '?' + queryString
-    });
+    this.props.history.push('checkout');
   }
 
   render() {
@@ -123,4 +114,4 @@ const mapDispatchToProps = dispatch => {
 
 }
 // export default withErrorHandler(BurgerBuilder, axios)
-export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder)
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder, axios)

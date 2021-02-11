@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+
 import Button from '../../../Components/UI/Button/Button';
 import classes from './ContactData.module.css'
 import axios from "../../../axios-orders";
@@ -102,7 +104,7 @@ class ContactData extends Component {
       formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
     }
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData,
       deliveryMethod: 'fastest'
@@ -175,7 +177,6 @@ class ContactData extends Component {
           shouldValidate={formElement.config.validation}
           changed={(event) => this.inputChangedHandler(event, formElement.id)}
         />
-
       ))}
       <Button btnType='Success' disabled={!this.state.formIsValid} clicked={this.orderHandler}>ORDER</Button>
     </form>);
@@ -193,4 +194,11 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice
+  };
+};
+
+export default connect(mapStateToProps)(ContactData);
