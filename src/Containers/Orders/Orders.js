@@ -13,7 +13,7 @@ class Orders extends Component {
   }
 
   componentDidMount() {
-    mapDispatchToProps();
+    this.props.onFetchOrders();
   }
 
   render() {
