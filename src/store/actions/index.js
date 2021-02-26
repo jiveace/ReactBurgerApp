@@ -3,11 +3,14 @@ export {
     removeIngredient,
     initIngredients,
     fetchIngredientsFailed,
-} from './burgerBuilder'
+} from './burgerBuilder';
 export {
     purchaseBurgerFail,
     purchaseBurger,
     purchaseBurgerSuccess,
     purchaseInit,
     fetchOrders,
-} from './order'
+} from './order';
+export {
+    auth
+} from './auth';
