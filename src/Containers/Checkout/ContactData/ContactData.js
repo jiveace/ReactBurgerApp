@@ -6,7 +6,7 @@ import classes from './ContactData.module.css'
 import Spinner from "../../../Components/UI/Spinner/Spinner";
 import Input from "../../../Components/UI/Input/Input";
 import * as actions from '../../../store/actions/index';
-import { updateObject } from '../../../shared/utility';
+import { updateObject, checkValidity } from '../../../shared/utility';
 
 
 class ContactData extends Component {
@@ -114,29 +114,10 @@ class ContactData extends Component {
     this.props.onOrderBurger(order, this.props.token);
   };
 
-
-  checkValidity(value, rules) {
-    let isValid = true;
-
-    if (rules.required) {
-      isValid = isValid && value.trim() !== '';
-    }
-
-    if (rules.minLength) {
-      isValid = isValid && value.length >= rules.minLength;
-    }
-
-    if (rules.maxLength) {
-      isValid = isValid && value.length <= rules.maxLength;
-    }
-
-    return isValid;
-  }
-
   inputChangedHandler = (event, inputIdentifier) => {
     const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], {
       value: event.target.value,
-      valid: this.checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+      valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
       touched: true
     });
     const updatedOrderForm = updateObject(this.state.orderForm, {
@@ -152,7 +133,6 @@ class ContactData extends Component {
 
   render() {
     const formElementsArray = [];
-    console.log("Trying to render")
     for (let key in this.state.orderForm) {
       formElementsArray.push({
         id: key,
