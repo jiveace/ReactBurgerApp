@@ -9,7 +9,7 @@ import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../Components/UI/Spinner/Spinner'
 import * as actions from '../../store/actions/index';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     purchasable: false,
     purchasing: false
