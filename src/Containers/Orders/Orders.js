@@ -5,10 +5,10 @@ import * as actions from '../../store/actions/index';
 import Spinner from '../../Components/UI/Spinner/Spinner';
 
 
-const Orders = (props) => {
+const Orders = props => {
   useEffect(() => {
     props.onFetchOrders(props.token, props.userId);
-  }, []);
+  }, [props]);
 
   let orders = <Spinner />;
   if (!props.loading) {
